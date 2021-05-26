@@ -128,12 +128,22 @@ clock.ontick = (evt) => {
   minutehand.groupTransform.rotate.angle = (6 * evt.date.getMinutes()) + (0.1 * evt.date.getSeconds());
   secondhand.groupTransform.rotate.angle = (6 * evt.date.getSeconds());
   hourhand24.groupTransform.rotate.angle = (15 * evt.date.getHours()) + (0.25 * evt.date.getMinutes());
-  amField.text = today.adjusted.activeMinutes;
-  stepsField.text = today.adjusted.steps;
-  dist = (units.distance === "metric" ? today.adjusted.distance * 0.001 : today.adjusted.distance * 0.000621371);
-  distField.text = Math.floor(dist * 100) / 100;
-  floorsField.text = today.adjusted.elevationGain;
-  calsField.text = today.adjusted.calories;
+  if (today.adjusted.activeZoneMinutes !== undefined) {
+    amField.text = today.adjusted.activeZoneMinutes.total;
+  }
+  if (today.adjusted.steps != undefined) {
+    stepsField.text = today.adjusted.steps;
+  }
+  if (today.adjusted.distance != undefined) {
+    dist = (units.distance === "metric" ? today.adjusted.distance * 0.001 : today.adjusted.distance * 0.000621371);
+    distField.text = Math.floor(dist * 100) / 100;
+  }
+  if (today.adjusted.elevationGain != undefined) {
+    floorsField.text = today.adjusted.elevationGain;
+  }
+  if (today.adjusted.calories != undefined) {
+    calsField.text = today.adjusted.calories;
+  }
   batteryMeter.sweepAngle = 3.6 * battery.chargeLevel;
   batteryPercent.text = `${battery.chargeLevel}%`
 };
